@@ -1,10 +1,10 @@
-# This Makefile is for convenience as a remider and shortcut for most used commands
+# This Makefile is for convenience as a reminder and shortcut for the most used commands
 
 # Package folder
 PACKAGE = sage_sample
 
-# chage to your sage command
-SAGE = ~/sage/sage
+# change to your sage command if needed
+SAGE = sage
 
 all: install test
 
@@ -12,7 +12,7 @@ install:
 	$(SAGE) -pip install --upgrade --no-index -v .
 
 uninstall:
-	$(SAGE) -pip uninstall $(PACKAGE)
+	$(SAGE) -pip uninstall .
 
 develop:
 	$(SAGE) -pip install --upgrade -e .
