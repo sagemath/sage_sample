@@ -1,1 +1,2 @@
 from diophantine_approximation import diophantine_approx
+from dirichlet import dirichlet

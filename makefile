@@ -7,7 +7,7 @@ develop:
 	sage -pip install --upgrade --no-index -e .
 
 test: 
-	sage -tp --force-lib sage_sample/*.py #sage_sample/*.pyx
+	sage -tp --force-lib sage_sample/*.py sage_sample/*.pyx
 
 coverage:
 	sage -coverage sage_sample/*
