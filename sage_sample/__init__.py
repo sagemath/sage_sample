@@ -1,0 +1,1 @@
+from diophantine_approximation import diophantine_approx
