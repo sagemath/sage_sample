@@ -81,13 +81,11 @@ For this to work on your own package, make sure you follow the same structure as
 we do here.
 
  * Create a ``docs`` folder containing the exact same ``Makefile`` and a ``source``
- folder.
-
+   folder.
  * Copy and paste the ``docs/source/conf.py`` file from this package and update
- the few project specific variables at the beginning of the file.
-
+   the few project specific variables at the beginning of the file.
  * Create an ``index.rst`` file as well as a ``<module name>.rst`` file for each
- module you want on the documentation. 
+   module you want on the documentation. 
 
 
     
