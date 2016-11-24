@@ -25,7 +25,7 @@ setup(
     url='https://github.com/nthiery/sage_sample',
     author='Nicolas M. Thiéry, Viviane Pons',
     author_email='viviane.pons@lri.fr', # choose a main contact email
-    license='GPLv2', # This should be consistent with the LICENCE file
+    license='GPLv2+', # This should be consistent with the LICENCE file
     classifiers=[
       # How mature is this project? Common values are
       #   3 - Alpha
