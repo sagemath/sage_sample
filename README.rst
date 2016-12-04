@@ -6,7 +6,7 @@ This package is designed as as simple `SageMath <http://www.sagemath.org>`_ pack
 example to serve as a good practice reference for package developers. We follow 
 python recommendations and adapt them to the SageMath community. You can find more 
 advanced documentation on python package creation on 
-`How To Package Your Python Code <http://python-packaging.readthedocs.io/en/latest/index.html>`_.
+`How To Package Your Python Code <https://packaging.python.org/>`_.
 
 
 Installation
