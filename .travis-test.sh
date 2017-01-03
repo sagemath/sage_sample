@@ -1,6 +1,6 @@
 #! /bin/sh
 set -e
-make install SAGE="$HOME/SageMath/sage"
-make test SAGE="$HOME/SageMath/sage"
-make doc SAGE="$HOME/SageMath/sage"
-make uninstall SAGE="$HOME/SageMath/sage"
+$HOME/SageMath/sage -pip install --upgrade --no-index -v .
+$HOME/SageMath/sage setup.py test
+(cd docs && $HOME/SageMath/sage -sh -c "make html")
+$HOME/SageMath/sage -pip uninstall .
