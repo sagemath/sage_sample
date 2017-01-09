@@ -87,6 +87,17 @@ we do here.
  * Create an ``index.rst`` file as well as a ``<module name>.rst`` file for each
    module you want on the documentation. 
 
+Travis CI integration
+---------------------
 
-    
+Scripts that run ``make test`` on various SageMath versions on the
+Travis CI system are included.
+https://docs.travis-ci.com/user/for-beginners explains how to enable
+automatic Travis CI builds for your GitHub-hosted project.
+
+The scripts download and install binary releases (7.1-7.4) from a
+SageMath mirror.  Edit ``.travis-install.sh`` if some optional or
+experimental SageMath packages need to be installed prior to running
+your package.  Edit ``.travis.yml`` to change the list of SageMath
+versions used.
 

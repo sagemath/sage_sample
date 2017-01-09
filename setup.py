@@ -15,7 +15,8 @@ def readfile(filename):
 class SageTest(TestCommand):
     def run_tests(self):
         errno = os.system("sage -t --force-lib sage_sample")
-        sys.exit(errno)
+        if errno != 0:
+            sys.exit(1)
 
 setup(
     name = "sage_sample",
