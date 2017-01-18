@@ -1,26 +1,26 @@
 language: python
-
-env:
-  - CACHE_NAME=7.1 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.1-Ubuntu_12.04-x86_64.tar.bz2
-  - CACHE_NAME=7.2 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.2-Ubuntu_12.04-x86_64.tar.bz2
-  - CACHE_NAME=7.3 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.3-Ubuntu_12.04-x86_64.tar.bz2
-  - CACHE_NAME=7.4 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.4-Ubuntu_12.04-x86_64.tar.bz2
-
 matrix:
+  include:
+  - env: CACHE_NAME=7.5.1 DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_REPOSITORY=mkoeppe/sage_sample DEPLOY_DOC_TO_DIRECTORY=doc/html SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.5.1-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.4 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.4-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.3 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.3-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.2 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.2-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.1 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.1-Ubuntu_12.04-x86_64.tar.bz2
   allow_failures:
   - env: CACHE_NAME=7.1 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.1-Ubuntu_12.04-x86_64.tar.bz2
-
 install:
-  - ./.travis-install.sh
-
+- ./.travis-install.sh
 script:
-  - ./.travis-test.sh
-
+- ./.travis-test.sh
 cache:
   directories:
-    - $HOME/SageMath
-    - $HOME/.cache/matplotlib
+  - $HOME/SageMath
+  - $HOME/.cache/matplotlib
   timeout: 1000
-
 before_cache:
- - rm -Rf $HOME/SageMath/logs $HOME/SageMath/.BUILDSTART
+- rm -Rf $HOME/SageMath/logs $HOME/SageMath/.BUILDSTART
+after_success:
+- ./.travis-deploy-doc.sh
+before_script:
+- openssl aes-256-cbc -K $encrypted_f96cc3b3888c_key -iv $encrypted_f96cc3b3888c_iv
+  -in .travis_ci_gh_pages_deploy_key.enc -out .travis_ci_gh_pages_deploy_key -d
