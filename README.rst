@@ -170,3 +170,6 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ git commit -m "Deploy built documentation to GitHub"
     $ git push
  
+ * The deployed documentation will be available at:
+   https://USER.github.io/PROJECT/doc/html/
+   (this can be customized).
