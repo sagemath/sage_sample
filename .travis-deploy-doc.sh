@@ -1,4 +1,8 @@
 #!/bin/bash
+# Copying and distribution of this file, with or without modification,
+# are permitted in any medium without royalty provided the copyright
+# notice and this notice are preserved.  This file is offered as-is,
+# without any warranty.
 set -e
 if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "${DEPLOY_DOC_FROM_BRANCH}" && -r .travis_ci_gh_pages_deploy_key ]]; then
     chmod 600 .travis_ci_gh_pages_deploy_key
