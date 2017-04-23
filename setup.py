@@ -24,7 +24,7 @@ setup(
     description='An example of a basic sage package',
     long_description = readfile("README.rst"), # get the long description from the README
     url='https://github.com/nthiery/sage_sample',
-    author='Nicolas M. Thiéry, Viviane Pons',
+    author='Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many',
     author_email='viviane.pons@lri.fr', # choose a main contact email
     license='GPLv2+', # This should be consistent with the LICENCE file
     classifiers=[
