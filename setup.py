@@ -23,7 +23,7 @@ setup(
     version = readfile("VERSION"), # the VERSION file is shared with the documentation
     description='An example of a basic sage package',
     long_description = readfile("README.rst"), # get the long description from the README
-    url='https://github.com/nthiery/sage_sample',
+    url='https://github.com/sagemath/sage_sample',
     author='Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many',
     author_email='viviane.pons@lri.fr', # choose a main contact email
     license='GPLv2+', # This should be consistent with the LICENCE file
