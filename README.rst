@@ -174,7 +174,7 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ echo "/gh-pages" >> .gitignore
     $ git add .gitignore
 
- * Edit ``.travis.yml`` to adjust variables ``DEPLOY_DOC_...``
+ * Optionally, edit ``.travis.yml`` to adjust variables ``DEPLOY_DOC_...``
 
  * Commit all changes to GitHub.  The Travis CI build should then run
    automatically and deploy it::

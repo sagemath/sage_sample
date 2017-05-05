@@ -5,6 +5,9 @@
 # without any warranty.
 set -e
 if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "${DEPLOY_DOC_FROM_BRANCH}" && -r .travis_ci_gh_pages_deploy_key ]]; then
+    if [[ -z "${DEPLOY_DOC_TO_REPOSITORY}" ]]; then
+        DEPLOY_DOC_TO_REPOSITORY="${TRAVIS_REPO_SLUG}"
+    fi
     chmod 600 .travis_ci_gh_pages_deploy_key
     eval `ssh-agent -s`
     ssh-add .travis_ci_gh_pages_deploy_key
