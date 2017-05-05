@@ -2,7 +2,7 @@
 Sage Sample Package
 ===================
 
-This package is designed as as simple `SageMath <http://www.sagemath.org>`_ package
+This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
 python recommendations and adapt them to the SageMath community. You can find more
 advanced documentation on python package creation on
