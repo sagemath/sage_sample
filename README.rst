@@ -8,6 +8,10 @@ python recommendations and adapt them to the SageMath community. You can find mo
 advanced documentation on python package creation on
 `How To Package Your Python Code <https://packaging.python.org/>`_.
 
+This is still a work in progress. Once this example will have
+stabilized, the plan is to make a
+`cookie cutter <https://cookiecutter.readthedocs.io/en/latest/>`_
+template out of it.
 
 Installation
 ------------
