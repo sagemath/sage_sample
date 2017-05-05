@@ -12,9 +12,9 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "${DEPLOY_DOC
     git clone --depth 1 git@github.com:${DEPLOY_DOC_TO_REPOSITORY}.git --depth 1 --branch=gh-pages gh-pages
     BUILT_DOCS_DIR=`cd docs/build/html && pwd`
     cd gh-pages
-    rm -Rf ${DEPLOY_DOC_TO_DIRECTORY}
-    mkdir -p ${DEPLOY_DOC_TO_DIRECTORY}
-    cp -R $BUILT_DOCS_DIR/* ${DEPLOY_DOC_TO_DIRECTORY}/
+    rm -Rf ./${DEPLOY_DOC_TO_DIRECTORY}/*
+    mkdir -p ./${DEPLOY_DOC_TO_DIRECTORY}
+    cp -R $BUILT_DOCS_DIR/* ./${DEPLOY_DOC_TO_DIRECTORY}/
     git add --all .
     git config user.name "Travis CI"
     git config user.email "nobody@example.org"

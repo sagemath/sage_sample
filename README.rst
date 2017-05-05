@@ -184,5 +184,9 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ git push
  
  * The deployed documentation will be available at:
+   https://USER.github.io/PROJECT/
+   This can be customized by changing ``DEPLOY_DOC_TO_DIRECTORY=/``
+   to another directory in ``.travis.yml``
+   For example, setting ``DEPLOY_DOC_TO_DIRECTORY=doc/html`` will make
+   the deployed documentation available at:
    https://USER.github.io/PROJECT/doc/html/
-   (this can be customized).
