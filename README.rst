@@ -103,6 +103,9 @@ structure as we do here:
 Travis CI integration
 ---------------------
 
+.. image:: https://travis-ci.org/sagemath/sage_sample.svg?branch=master
+    :target: https://travis-ci.org/sagemath/sage_sample
+
 Scripts that run ``make test`` on various SageMath versions on the
 Travis CI system are included.
 https://docs.travis-ci.com/user/for-beginners explains how to enable
