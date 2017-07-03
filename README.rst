@@ -21,7 +21,7 @@ Local install from source
 
 Download the source from the git repository::
 
-    $ git clone https://github.com/nthiery/sage_sample.git
+    $ git clone https://github.com/sagemath/sage_sample.git
 
 Change to the root directory and run::
 
