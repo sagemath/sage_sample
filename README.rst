@@ -36,13 +36,11 @@ Create an account at https://pypi.python.org/pypi
 
 Install ``twine`` in Sage::
 
-    $ sage -pip install --upgrade twine'
+    $ sage -pip install --upgrade twine
 
-Create the distribution::
+Create the distribution (you can also use ``bdist`` instead to create the built distribution instead of the source one)::
 
     $ python setup.py sdist
-
- (you can also use ``bdist`` instead to create the built distribution)
 
 Upload to PyPI::
 
