@@ -65,6 +65,6 @@ setup(
     keywords = "SageMath packaging",
     install_requires = ['sagemath'], # This ensures that Sage is installed
     packages = ['sage_sample'],
-    ext_modules = cytonize(ext_modules), # This line is only needed if there are cython files present
+    ext_modules = cythonize(ext_modules), # This line is only needed if there are cython files present
     cmdclass = {'build': build, 'test': SageTest} # adding a special setup command for tests
 )
