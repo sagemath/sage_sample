@@ -47,7 +47,7 @@ Setup
 ------
 
 All packaging setup is done through ``setup.py``. To create your own package
-follow the strcuture of the file and change the parameters accordingly.
+follow the structure of the file and change the parameters accordingly.
 
 Source code
 -----------
@@ -120,14 +120,14 @@ versions used.
 Automatically deploying documentation to GitHub pages using Travis CI
 ---------------------------------------------------------------------
 
- * First do the steps described above to enable Travis CI integration
-   of your GitHub-hosted project.
-   
- * If you don't already have GitHub pages for your project: Create and
-   checkout a branch ``gh-pages`` in your repository and put an empty
-   file ``.nojekyll`` in it.  (See
-   https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/)::
-   Commit it and push it to GitHub::
+* First do the steps described above to enable Travis CI integration
+  of your GitHub-hosted project.
+
+* If you don't already have GitHub pages for your project: Create and
+  checkout a branch ``gh-pages`` in your repository and put an empty
+  file ``.nojekyll`` in it.  (See
+  https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/)::
+  Commit it and push it to GitHub::
 
     $ git clone --single-branch --depth 1 https://github.com/USER/PROJECT.git gh-pages
     $ cd gh-pages
@@ -138,38 +138,38 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ git commit -m "Initial commit"
     $ git push -u origin gh-pages
     $ cd ..
-    
- * (Back in your working copy:) Generate a new ssh key pair with an
-   empty passphrase::
+
+* (Back in your working copy:) Generate a new ssh key pair with an
+  empty passphrase::
 
     $ ssh-keygen -t dsa -f .travis_ci_gh_pages_deploy_key
 
- * Add the public ssh key (contents of the file
-   ``.travis_ci_gh_pages_deploy_key.pub``) to your GitHub repository
-   as a deploy key (Settings/Deploy keys/Add deploy key).
-   Title: Key for deploying documentation to GitHub pages.
-   Check Allow write access.
+* Add the public ssh key (contents of the file
+  ``.travis_ci_gh_pages_deploy_key.pub``) to your GitHub repository
+  as a deploy key (Settings/Deploy keys/Add deploy key).
+  Title: Key for deploying documentation to GitHub pages.
+  Check Allow write access.
 
- * Install the Travis CI command-line client from
-   https://github.com/travis-ci/travis.rb::
+* Install the Travis CI command-line client from
+  https://github.com/travis-ci/travis.rb::
 
     $ gem install travis
-   
- * Log in to Travis CI using your GitHub credentials::
+
+* Log in to Travis CI using your GitHub credentials::
 
     $ travis login
-   
- * Encrypt the private ssh key, add the decryption keys
-   as secure environment variables to Travis CI, and
-   add code to ``.travis.yml`` to decrypt it::
+
+* Encrypt the private ssh key, add the decryption keys
+  as secure environment variables to Travis CI, and
+  add code to ``.travis.yml`` to decrypt it::
 
     $ travis encrypt-file .travis_ci_gh_pages_deploy_key --add before_script
 
- * Add the encrypted private ssh key to the repository::
+* Add the encrypted private ssh key to the repository::
 
     $ git add .travis_ci_gh_pages_deploy_key.enc
 
- * Have git ignore the other keys (and the gh-pages directory)::
+* Have git ignore the other keys (and the gh-pages directory)::
 
     $ echo >> .gitignore
     $ echo "/.travis_ci_gh_pages_deploy_key" >> .gitignore
@@ -177,19 +177,19 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ echo "/gh-pages" >> .gitignore
     $ git add .gitignore
 
- * Optionally, edit ``.travis.yml`` to adjust variables ``DEPLOY_DOC_...``
+* Optionally, edit ``.travis.yml`` to adjust variables ``DEPLOY_DOC_...``
 
- * Commit all changes to GitHub.  The Travis CI build should then run
-   automatically and deploy it::
+* Commit all changes to GitHub.  The Travis CI build should then run
+  automatically and deploy it::
 
     $ git add .travis.yml
     $ git commit -m "Deploy built documentation to GitHub"
     $ git push
- 
- * The deployed documentation will be available at:
-   https://USER.github.io/PROJECT/
-   This can be customized by changing ``DEPLOY_DOC_TO_DIRECTORY=/``
-   to another directory in ``.travis.yml``
-   For example, setting ``DEPLOY_DOC_TO_DIRECTORY=doc/html`` will make
-   the deployed documentation available at:
-   https://USER.github.io/PROJECT/doc/html/
+
+* The deployed documentation will be available at:
+  https://USER.github.io/PROJECT/
+  This can be customized by changing ``DEPLOY_DOC_TO_DIRECTORY=/``
+  to another directory in ``.travis.yml``
+  For example, setting ``DEPLOY_DOC_TO_DIRECTORY=doc/html`` will make
+  the deployed documentation available at:
+  https://USER.github.io/PROJECT/doc/html/

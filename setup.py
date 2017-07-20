@@ -4,12 +4,25 @@ import sys
 from setuptools import setup
 from codecs import open # To open the README file with proper encoding
 from setuptools.command.test import test as TestCommand # for tests
+from distutils.command import build as build_module
 
+# The next block is needed if there are cython files
+from setuptools import Extension
+from Cython.Build import cythonize
+import Cython.Compiler.Options
+from sage.env import sage_include_directories
 
 # Get information from separate files (README, VERSION)
 def readfile(filename):
     with open(filename,  encoding='utf-8') as f:
         return f.read()
+
+# Check the right Sage version
+class build(build_module.build):
+    def run(self):
+        from sagemath.check_version import check_version
+        check_version(sage_required_version)
+        build_module.build.run(self)
 
 # For the tests
 class SageTest(TestCommand):
@@ -17,6 +30,16 @@ class SageTest(TestCommand):
         errno = os.system("sage -t --force-lib sage_sample")
         if errno != 0:
             sys.exit(1)
+
+# Cython modules
+ext_modules = [
+         Extension('sage_sample.one_cython_file',
+         sources = [os.path.join('sage_sample','one_cython_file.pyx')],
+         include_dirs=sage_include_directories())
+]
+
+# Specify the required Sage version
+sage_required_version = '>=7.6'
 
 setup(
     name = "sage_sample",
@@ -40,6 +63,8 @@ setup(
       'Programming Language :: Python :: 2.7',
     ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     keywords = "SageMath packaging",
+    install_requires = ['sagemath'], # This ensures that Sage is installed
     packages = ['sage_sample'],
-    cmdclass = {'test': SageTest} # adding a special setup command for tests
+    ext_modules = cytonize(ext_modules), # This line is only needed if there are cython files present
+    cmdclass = {'build': build, 'test': SageTest} # adding a special setup command for tests
 )

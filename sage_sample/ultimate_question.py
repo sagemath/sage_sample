@@ -23,6 +23,7 @@ AUTHORS:
 - Viviane Pons: initial implementation
 """
 from sage.combinat.combinat import catalan_number
+from one_cython_file import quick_question
 
 def answer_to_ultimate_question():
     r"""
@@ -42,4 +43,4 @@ def answer_to_ultimate_question():
         sage: answer_to_ultimate_question() == 42
         True
     """
-    return catalan_number(5)
+    return quick_question(catalan_number(5)) - 1
