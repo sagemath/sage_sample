@@ -123,11 +123,10 @@ Travis CI system are included.
 https://docs.travis-ci.com/user/for-beginners explains how to enable
 automatic Travis CI builds for your GitHub-hosted project.
 
-The scripts download and install binary releases (7.1-7.4) from a
+The scripts download and install the last two binary releases from a
 SageMath mirror.  Edit ``.travis-install.sh`` if some optional or
 experimental SageMath packages need to be installed prior to running
-your package.  Edit ``.travis.yml`` to change the list of SageMath
-versions used.
+your package.
 
 Automatically deploying documentation to GitHub pages using Travis CI
 ---------------------------------------------------------------------
