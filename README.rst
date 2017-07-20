@@ -32,7 +32,22 @@ shorthand:
 Install from PyPI
 ^^^^^^^^^^^^^^^^^^
 
-TODO: distribute on PyPI.
+Here are the main steps to follow in order to make the package available to the PyPI repository::
+
+* Create an account at https://pypi.python.org/pypi
+* Install ``twine`` in Sage::
+
+    $ sage -pip install --upgrade twine'
+
+* Create the distribution::
+
+    $ python setup.py sdist
+
+ (you can also use ``bdist`` instead to create the built distribution)
+
+* Upload to PyPI::
+
+    $ twine upload dist/* -r pypi
 
 Usage
 -----
