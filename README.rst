@@ -2,12 +2,16 @@
 Sage Sample Package
 ===================
 
-This package is designed as as simple `SageMath <http://www.sagemath.org>`_ package
+This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
 python recommendations and adapt them to the SageMath community. You can find more
 advanced documentation on python package creation on
 `How To Package Your Python Code <https://packaging.python.org/>`_.
 
+This is still a work in progress. Once this example will have
+stabilized, the plan is to make a
+`cookie cutter <https://cookiecutter.readthedocs.io/en/latest/>`_
+template out of it.
 
 Installation
 ------------
@@ -17,7 +21,7 @@ Local install from source
 
 Download the source from the git repository::
 
-    $ git clone https://github.com/nthiery/sage_sample.git
+    $ git clone https://github.com/sagemath/sage_sample.git
 
 Change to the root directory and run::
 
@@ -25,7 +29,7 @@ Change to the root directory and run::
 
 For convenience this package contains a [makefile](makefile) with this
 and other often used commands. Should you wish too, you can use the
-shorthand:
+shorthand::
 
     $ make install
 
@@ -85,7 +89,7 @@ configured in ``setup.py`` to run the tests::
 
 This is just calling ``sage -t`` with appropriate flags.
 
-Shorthand:
+Shorthand::
 
     $ make test
 
@@ -98,19 +102,19 @@ The documentation of the package can be generated using Sage's
     $ cd docs
     $ sage -sh -c "make html"
 
-Shorthand:
+Shorthand::
 
     $ make doc
 
 For this to work on your own package, make sure you follow the same
 structure as we do here:
 
- * Create a ``docs`` folder containing the exact same ``Makefile`` and a ``source``
-   folder.
- * Copy and paste the ``docs/source/conf.py`` file from this package and update
-   the few project specific variables at the beginning of the file.
- * Create an ``index.rst`` file as well as a ``<module name>.rst`` file for each
-   module you want on the documentation.
+* Create a ``docs`` folder containing the exact same ``Makefile`` and a ``source``
+  folder.
+* Copy and paste the ``docs/source/conf.py`` file from this package and update
+  the few project specific variables at the beginning of the file.
+* Create an ``index.rst`` file as well as a ``<module name>.rst`` file for each
+  module you want on the documentation.
 
 Travis CI integration
 ---------------------
@@ -133,12 +137,12 @@ Automatically deploying documentation to GitHub pages using Travis CI
 
 * First do the steps described above to enable Travis CI integration
   of your GitHub-hosted project.
-
+  
 * If you don't already have GitHub pages for your project: Create and
   checkout a branch ``gh-pages`` in your repository and put an empty
-  file ``.nojekyll`` in it.  (See
-  https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/)::
-  Commit it and push it to GitHub::
+  file ``.nojekyll`` in it (see
+  https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/).
+  Then commit it and push it to GitHub::
 
     $ git clone --single-branch --depth 1 https://github.com/USER/PROJECT.git gh-pages
     $ cd gh-pages
