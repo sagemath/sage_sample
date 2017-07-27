@@ -4,8 +4,8 @@
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 set -e
-$HOME/SageMath/sage -sh -c "pip install --upgrade -i https://pypi.python.org/simple/ -v sagemath"
-$HOME/SageMath/sage -sh -c "pip install --upgrade --no-index -v ."
+$HOME/SageMath/sage -pip install --upgrade -i https://pypi.python.org/simple/ -v sagemath
+$HOME/SageMath/sage -pip install --upgrade --no-index -v .
 $HOME/SageMath/sage setup.py test
 (cd docs && $HOME/SageMath/sage -sh -c "make html")
 $HOME/SageMath/sage -sh -c "pip uninstall ."
