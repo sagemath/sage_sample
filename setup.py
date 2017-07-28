@@ -30,7 +30,10 @@ def readfile(filename):
 # Check the right Sage version
 class build(build_module.build):
     def run(self):
-        errno = os.system('''sage -python -c "from sagemath.check_version import check_version; check_version('%s')"'''%sage_required_version)
+        try:
+            errno = os.system('''sage -python -c "from sagemath.check_version import check_version; check_version('%s')"'''%sage_required_version)
+        except ValueError:
+            errno = -1
         if errno != 0:
             sys.exit(1)
         # from sagemath.check_version import check_version
