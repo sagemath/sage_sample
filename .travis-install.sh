@@ -5,6 +5,8 @@
 # without any warranty.
 set -e
 SAGE_IMAGE=`python2 -c "import setup; print setup.get_all_version_names('${SAGE_SERVER}index.html',${SAGE_AGE})"`
+echo "Obtaining Sage image:"
+echo $SAGE_IMAGE
 cd $HOME
 if [ ! -x SageMath/sage ] ; then
     rm -f SageMath.tar.bz2
