@@ -1,5 +1,4 @@
 language: python
-dist: precise
 matrix:
   include:
   - env: CACHE_NAME=latest DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_REPOSITORY=mmasdeu/sage_sample
