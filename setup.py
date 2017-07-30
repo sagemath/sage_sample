@@ -9,7 +9,7 @@ from setuptools.command.test import test as TestCommand # for tests
 from distutils.command import build as build_module
 
 # Obtain the different Sage versions
-def get_all_version_names(mirror_url, idx = None, distribution = 'Ubuntu_14.04-x86_64'):
+def get_all_version_names(mirror_url, idx = None, distribution = 'Ubuntu_12.04-x86_64'):
     if idx is None:
         idx = 0
     else:
