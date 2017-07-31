@@ -25,3 +25,4 @@ if [[ "${TRAVIS_PULL_REQUEST}" == "false" && "${TRAVIS_BRANCH}" == "${DEPLOY_DOC
 	git push origin gh-pages
     fi
 fi
+/usr/bin/killall python2

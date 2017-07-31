@@ -1,0 +1,5 @@
+prune sage_sample
+include VERSION
+include sage_sample/*.py
+include sage_sample/*.pyx
+

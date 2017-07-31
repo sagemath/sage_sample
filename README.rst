@@ -36,7 +36,19 @@ shorthand::
 Install from PyPI
 ^^^^^^^^^^^^^^^^^^
 
-TODO: distribute on PyPI.
+Create an account at https://pypi.python.org/pypi
+
+Install ``twine`` in Sage::
+
+    $ sage -pip install --upgrade twine
+
+Create the distribution (you can also use ``bdist`` instead to create the built distribution instead of the source one)::
+
+    $ python setup.py sdist
+
+Upload to PyPI::
+
+    $ twine upload dist/* -r pypi
 
 Usage
 -----
@@ -51,7 +63,7 @@ Setup
 ------
 
 All packaging setup is done through ``setup.py``. To create your own package
-follow the strcuture of the file and change the parameters accordingly.
+follow the structure of the file and change the parameters accordingly.
 
 Source code
 -----------
@@ -115,11 +127,10 @@ Travis CI system are included.
 https://docs.travis-ci.com/user/for-beginners explains how to enable
 automatic Travis CI builds for your GitHub-hosted project.
 
-The scripts download and install binary releases (7.1-7.4) from a
+The scripts download and install the last two binary releases from a
 SageMath mirror.  Edit ``.travis-install.sh`` if some optional or
 experimental SageMath packages need to be installed prior to running
-your package.  Edit ``.travis.yml`` to change the list of SageMath
-versions used.
+your package.
 
 Automatically deploying documentation to GitHub pages using Travis CI
 ---------------------------------------------------------------------
@@ -142,7 +153,7 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ git commit -m "Initial commit"
     $ git push -u origin gh-pages
     $ cd ..
-   
+
 * (Back in your working copy:) Generate a new ssh key pair with an
   empty passphrase::
 
@@ -158,11 +169,11 @@ Automatically deploying documentation to GitHub pages using Travis CI
   https://github.com/travis-ci/travis.rb::
 
     $ gem install travis
-  
+
 * Log in to Travis CI using your GitHub credentials::
 
     $ travis login
-  
+
 * Encrypt the private ssh key, add the decryption keys
   as secure environment variables to Travis CI, and
   add code to ``.travis.yml`` to decrypt it::
