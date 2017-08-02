@@ -1,2 +1,2 @@
-sagemath >= 1.0
+sagemath >= 1.2.8
 cython >= 0.26
