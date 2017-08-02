@@ -60,6 +60,7 @@ if __name__ == "__main__":
 
     # Specify the required Sage version
     sage_required_version = '>=7.5'
+    REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
 
     setup(
         name = "sage_sample",
@@ -83,7 +84,7 @@ if __name__ == "__main__":
           'Programming Language :: Python :: 2.7',
         ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         keywords = "SageMath packaging",
-        install_requires = ['sagemath'], # This ensures that Sage is installed
+        install_requires = REQUIREMENTS, # This ensures that Sage is installed
         packages = ['sage_sample'],
         ext_modules = cythonize(ext_modules), # This line is only needed if there are cython files present
         include_package_data = True,

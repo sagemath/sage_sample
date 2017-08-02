@@ -1,0 +1,2 @@
+sagemath >= 7.5
+cython >= 0.26
