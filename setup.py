@@ -59,7 +59,7 @@ if __name__ == "__main__":
     ]
 
     # Specify the required Sage version
-    sage_required_version = '>=7.5'
+    sage_required_version = '>=7.4'
     REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
 
     setup(
