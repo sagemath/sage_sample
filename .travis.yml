@@ -6,6 +6,7 @@ language: python
 
 env:
   global:
+  - PIP_PACKAGE_NAME=sage_sample
   - DEPLOY_DOC_TO_DIRECTORY=/
   - DEPLOY_DOC_FROM_DIRECTORY=docs/build/html
   - SAGE_SERVER=http://mirrors.xmission.com/sage/
