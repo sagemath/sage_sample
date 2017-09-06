@@ -128,67 +128,81 @@ Automatically deploying documentation to GitHub pages using Travis CI
   of your GitHub-hosted project.
   
 * If you don't already have GitHub pages for your project: Create and
-  checkout a branch ``gh-pages`` in your repository and put an empty
-  file ``.nojekyll`` in it (see
-  https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/).
-  Then commit it and push it to GitHub::
+  checkout a branch empty branch ``gh-pages`` in your repository. 
+  Then commit it and push it to GitHub. This is done in a new clone
+  because we will delete it after we pushed everything to github.
 
-    $ git clone --single-branch --depth 1 https://github.com/USER/PROJECT.git gh-pages
-    $ cd gh-pages
-    $ git checkout --orphan gh-pages
-    $ git rm -rf .
-    $ touch .nojekyll
-    $ git add .nojekyll
-    $ git commit -m "Initial commit"
-    $ git push -u origin gh-pages
-    $ cd ..
+    git clone --single-branch --depth 1 https://github.com/USER/PROJECT.git tmp_dir 
+    cd tmp_dir 
+    git checkout --orphan gh-pages
+    git rm -rf .
+    git commit -m --alow-empty "Initial commit"
+    git push -u origin gh-pages
+    cd ..
+    
    
 * (Back in your working copy:) Generate a new ssh key pair with an
   empty passphrase::
 
-    $ ssh-keygen -t dsa -f .travis_ci_gh_pages_deploy_key
+    ssh-keygen -t dsa -f .travis_ci_gh_pages_deploy_key
 
 * Add the public ssh key (contents of the file
   ``.travis_ci_gh_pages_deploy_key.pub``) to your GitHub repository
-  as a deploy key (Settings/Deploy keys/Add deploy key).
+  as a deploy key on http://github.com (Settings/Deploy keys/Add deploy key).
   Title: Key for deploying documentation to GitHub pages.
   Check Allow write access.
 
 * Install the Travis CI command-line client from
   https://github.com/travis-ci/travis.rb::
 
-    $ gem install travis
+    gem install travis 
+
+  One might need to add the ``--user-install`` option to gem if one doesn't have 
+  write acces to the system wide gem repository. If one does this be sure to also 
+  add the place where travis is installed to your path. This should be something
+  like ``$HOME/.gem/ruby/2.0.0/bin``
+  
   
 * Log in to Travis CI using your GitHub credentials::
 
-    $ travis login
+    travis login
   
 * Encrypt the private ssh key, add the decryption keys
   as secure environment variables to Travis CI, and
   add code to ``.travis.yml`` to decrypt it::
 
-    $ travis encrypt-file .travis_ci_gh_pages_deploy_key --add before_script
+    travis encrypt-file .travis_ci_gh_pages_deploy_key --add before_deploy
 
-* Add the encrypted private ssh key to the repository::
+* inspect the ``.travis.yml`` file. The ``before_deploy`` section should look
+  something like this::
 
-    $ git add .travis_ci_gh_pages_deploy_key.enc
+    before_deploy:
+    - travis_scripts/get-key.sh
+    - openssl aes-256-cbc -K $encrypted_0fe3b59c4233_key -iv $encrypted_0fe3b59c4233_iv -in .travis_ci_gh_pages_deploy_key.enc -out .travis_ci_gh_pages_deploy_key -d
+  
+  if there are more then one openssl command, remove all but the last one.
 
-* Have git ignore the other keys (and the gh-pages directory)::
+* Add the encrypted ssh key to the ``tmp_dir`` repository in a new branch called ``deploy_key``::
 
-    $ echo >> .gitignore
-    $ echo "/.travis_ci_gh_pages_deploy_key" >> .gitignore
-    $ echo "/.travis_ci_gh_pages_deploy_key.pub" >> .gitignore
-    $ echo "/gh-pages" >> .gitignore
-    $ git add .gitignore
+    cd tmp_dir
+    git checkout --orphan deploy_key
+    git add .travis_ci_gh_pages_deploy_key.enc
+    git commit -m "Added Travis GitHub pages deploy key"
+    git push origin deploy_key
+
+* we can now savely remove the repository in tmp_dir::
+
+    cd ..
+    rm -rf tmp_dir
 
 * Optionally, edit ``.travis.yml`` to adjust variables ``DEPLOY_DOC_...``
 
 * Commit all changes to GitHub.  The Travis CI build should then run
   automatically and deploy it::
 
-    $ git add .travis.yml
-    $ git commit -m "Deploy built documentation to GitHub"
-    $ git push
+    git add .travis.yml
+    git commit -m "Deploy built documentation to GitHub"
+    git push
 
 * The deployed documentation will be available at:
   https://USER.github.io/PROJECT/

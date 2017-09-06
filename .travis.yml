@@ -43,6 +43,8 @@ addons:
      # Also, optional package installs in .travis-install.sh will trigger build of sage gcc.
      - gfortran
 
+
+#here is where actually all the testing happens
 script:
 - travis_scripts/test.sh
 #add lines of the following type if you want to run aditional tests
@@ -54,10 +56,14 @@ before_deploy:
 - openssl aes-256-cbc -K $encrypted_0fe3b59c4233_key -iv $encrypted_0fe3b59c4233_iv -in .travis_ci_gh_pages_deploy_key.enc -out .travis_ci_gh_pages_deploy_key -d
 
 deploy:
+#If travis start supporting ssh/deploy keys this could be changed to be handled by their
+#pages provider documented at https://docs.travis-ci.com/user/deployment/pages/ .
+#However currently that needs an authentication token giving write acces to all your
+#repositories, which is really insecure and a bad idea!
   provider: script
   skip_cleanup: true
   on:
-    branch: travis_check
+    branch: master
     condition: $DEPLOY_DOC = true 
   script: travis_scripts/deploy-doc.sh
 

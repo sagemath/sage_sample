@@ -15,8 +15,6 @@ if [[ -r .travis_ci_gh_pages_deploy_key ]]; then
     rm -Rf $HOME/gh-pages
     git clone --depth 1 git@github.com:${DEPLOY_DOC_TO_REPOSITORY}.git --branch=gh-pages $HOME/gh-pages
     BUILT_DOCS_DIR=$TRAVIS_BUILD_DIR/$DEPLOY_DOC_FROM_DIRECTORY
-    echo "DEPLOY_DOC_FROM_DIRECTORY"
-    echo $DEPLOY_DOC_FROM_DIRECTORY
     cd $HOME/gh-pages
     touch .nojekyll
     rm -Rf ./${DEPLOY_DOC_TO_DIRECTORY}/*
