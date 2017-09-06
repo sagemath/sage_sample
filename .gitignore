@@ -1,3 +1,6 @@
+# Os/editor stuff
+*.swp
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -90,4 +93,3 @@ ENV/
 
 /.travis_ci_gh_pages_deploy_key
 /.travis_ci_gh_pages_deploy_key.pub
-/gh-pages
