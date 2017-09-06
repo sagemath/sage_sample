@@ -3,30 +3,37 @@
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 language: python
+
+env:
+  global:
+  - DEPLOY_DOC_TO_DIRECTORY=/
+  - DEPLOY_DOC_FROM_DIRECTORY=docs/build/html
+  - SAGE_SERVER=http://mirrors.xmission.com/sage/
+
 matrix:
   include:
-  - env: CACHE_NAME=8.0 DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_DIRECTORY=/ SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-8.0-Ubuntu_14.04-x86_64.tar.bz2
+  - env: CACHE_NAME=8.0 SAGE_IMAGE=linux/64bit/sage-8.0-Ubuntu_14.04-x86_64.tar.bz2 DEPLOY_DOC=true 
     dist: trusty
-  - env: CACHE_NAME=7.6 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.6-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.6 SAGE_IMAGE=linux/64bit/sage-7.6-Ubuntu_12.04-x86_64.tar.bz2
     dist: precise
-  - env: CACHE_NAME=7.5.1 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.5.1-Ubuntu_12.04-x86_64.tar.bz2
+  - env: CACHE_NAME=7.5.1 SAGE_IMAGE=linux/64bit/sage-7.5.1-Ubuntu_12.04-x86_64.tar.bz2
     dist: precise
-install:
-- ./.travis-install.sh
-script:
-- ./.travis-test.sh
+# the following environment is usefull if you just want to test travis
+# without needing to wait very long for sage to install
+# it causes the travis_scripts install.sh and test.sh to not execute.
+  - env: CACHE_NAME=NO_SAGE TEST_TRAVIS=true
+
 cache:
   directories:
   - $HOME/SageMath
   - $HOME/.cache/matplotlib
   timeout: 1000
+
 before_cache:
 - rm -Rf $HOME/SageMath/logs $HOME/SageMath/.BUILDSTART
-after_success:
-- ./.travis-deploy-doc.sh
-before_script:
-- openssl aes-256-cbc -K $encrypted_f96cc3b3888c_key -iv $encrypted_f96cc3b3888c_iv
-  -in .travis_ci_gh_pages_deploy_key.enc -out .travis_ci_gh_pages_deploy_key -d || true
+
+install:
+- travis_scripts/install-sage.sh
 
 addons:
   apt:
@@ -35,3 +42,29 @@ addons:
      # Otherwise, numpy cannot be imported.
      # Also, optional package installs in .travis-install.sh will trigger build of sage gcc.
      - gfortran
+
+
+#here is where actually all the testing happens
+script:
+- travis_scripts/test.sh
+#add lines of the following type if you want to run aditional tests
+#- some_command some_arguments
+
+
+before_deploy:
+- travis_scripts/get-key.sh
+- openssl aes-256-cbc -K $encrypted_f96cc3b3888c_key -iv $encrypted_f96cc3b3888c_iv -in .travis_ci_gh_pages_deploy_key.enc -out .travis_ci_gh_pages_deploy_key -d
+
+deploy:
+#If travis start supporting ssh/deploy keys this could be changed to be handled by their
+#pages provider documented at https://docs.travis-ci.com/user/deployment/pages/ .
+#However currently that needs an authentication token giving write acces to all your
+#repositories, which is really insecure and a bad idea!
+  provider: script
+  skip_cleanup: true
+  on:
+    branch: master
+    condition: $DEPLOY_DOC = true 
+  script: travis_scripts/deploy-doc.sh
+
+
