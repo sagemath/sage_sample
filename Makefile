@@ -12,7 +12,7 @@ install:
 	$(SAGE) -pip install --upgrade --no-index -v .
 
 uninstall:
-	$(SAGE) -pip uninstall .
+	$(SAGE) -pip uninstall -vy sage_sample 
 
 develop:
 	$(SAGE) -pip install --upgrade -e .
@@ -23,10 +23,10 @@ test:
 coverage:
 	$(SAGE) -coverage $(PACKAGE)/*
 
-doc:
+doc: install #sphynx needs be able to import the package in order to build docs
 	cd docs && $(SAGE) -sh -c "make html"
 
-doc-pdf:
+doc-pdf: install
 	cd docs && $(SAGE) -sh -c "make latexpdf"
 
 clean: clean-doc
