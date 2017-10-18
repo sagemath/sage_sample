@@ -17,7 +17,7 @@ project = u"An example of a basic sage package"
 copyright = u'2016, Viviane Pons'
 package_name = 'sage_sample'
 package_folder = "../../sage_sample"
-authors = u"Nicolas M. Thiéry, Viviane Pons"
+authors = u"Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many"
 
 import sys
 import os
