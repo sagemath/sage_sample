@@ -65,8 +65,8 @@ Tests
 
 This package is configured for tests written in the documentation
 strings, also known as ``doctests``. For examples, see this
-[source file](sage_sample/ultimate_question.py). See also
-[SageMath's coding conventions and best practices document](http://doc.sagemath.org/html/en/developer/coding_basics.html#writing-testable-examples).
+`source file <sage_sample/ultimate_question.py>`_. See also
+`SageMath's coding conventions and best practices document <http://doc.sagemath.org/html/en/developer/coding_basics.html#writing-testable-examples>`_.
 With additional configuration, it would be possible to include unit
 tests as well.
 
