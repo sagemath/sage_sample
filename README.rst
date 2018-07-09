@@ -2,7 +2,7 @@
 Sage Sample Package
 ===================
 
-[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/sagemath/sage-sample/master)
+.. image:: https://mybinder.org/badge.svg :target: https://mybinder.org/v2/gh/sagemath/sage_sample/master
 
 This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
@@ -21,7 +21,7 @@ Installation
 Try it on binder
 ^^^^^^^^^^^^^^^^
 
-`demo <[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/sagemath/sage-sample/master?filepath=demo.ipynb)>`_
+`demo <https://mybinder.org/v2/gh/sagemath/sage_sample/master?filepath=demo.ipynb>`_
 
 Local install from source
 ^^^^^^^^^^^^^^^^^^^^^^^^^
