@@ -2,6 +2,8 @@
 Sage Sample Package
 ===================
 
+[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/sagemath/sage-sample/master)
+
 This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
 python recommendations and adapt them to the SageMath community. You can find more
@@ -15,6 +17,11 @@ template out of it.
 
 Installation
 ------------
+
+Try it on binder
+^^^^^^^^^^^^^^^^
+
+`demo <[![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/sagemath/sage-sample/master?filepath=demo.ipynb)>`_
 
 Local install from source
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -46,6 +53,8 @@ Once the package is installed, you can use it in Sage with::
     sage: from sage_sample import answer_to_ultimate_question
     sage: answer_to_ultimate_question()
     42
+
+See also the `demo notebook <demo.ipynb>`_.
 
 Setup
 ------
