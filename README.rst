@@ -2,7 +2,8 @@
 Sage Sample Package
 ===================
 
-.. image:: https://mybinder.org/badge.svg :target: https://mybinder.org/v2/gh/sagemath/sage_sample/master
+.. image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/sagemath/sage_sample/master
 
 This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
