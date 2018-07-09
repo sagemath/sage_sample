@@ -19,10 +19,8 @@ template out of it.
 Installation
 ------------
 
-Try it on binder
-^^^^^^^^^^^^^^^^
-
-`demo <https://mybinder.org/v2/gh/sagemath/sage_sample/master?filepath=demo.ipynb>`_
+Try the `demo <https://mybinder.org/v2/gh/sagemath/sage_sample/master?filepath=demo.ipynb>`_ on binder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Local install from source
 ^^^^^^^^^^^^^^^^^^^^^^^^^
