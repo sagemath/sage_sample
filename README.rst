@@ -33,7 +33,7 @@ Change to the root directory and run::
 
     $ sage -pip install --upgrade --no-index -v .
 
-For convenience this package contains a [makefile](makefile) with this
+For convenience this package contains a `makefile <makefile>`_ with this
 and other often used commands. Should you wish too, you can use the
 shorthand::
 
