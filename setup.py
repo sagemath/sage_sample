@@ -41,5 +41,7 @@ setup(
     ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     keywords = "SageMath packaging",
     packages = ['sage_sample'],
-    cmdclass = {'test': SageTest} # adding a special setup command for tests
+    cmdclass = {'test': SageTest}, # adding a special setup command for tests
+    setup_requires   = ['sage-package'],
+    install_requires = ['sage-package', 'sphinx'],
 )
