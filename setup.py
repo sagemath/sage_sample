@@ -20,7 +20,7 @@ class SageTest(TestCommand):
 
 setup(
     name = "sage_sample",
-    version = readfile("VERSION"), # the VERSION file is shared with the documentation
+    version = readfile("VERSION").strip(), # the VERSION file is shared with the documentation
     description='An example of a basic sage package',
     long_description = readfile("README.rst"), # get the long description from the README
     url='https://github.com/sagemath/sage_sample',
