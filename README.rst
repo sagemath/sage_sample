@@ -42,7 +42,30 @@ shorthand::
 Install from PyPI
 ^^^^^^^^^^^^^^^^^^
 
-TODO: distribute on PyPI.
+sage_sample is distributed on PyPI. You can install it with the command:
+
+    $ sage -pip install sage_sample
+
+To distribute your own package on PyPI, you will need an account on pypi.org
+(maybe at first on test.pypi.org)
+
+You also need to install setuptools, wheel and twine:
+
+    $ sage -pip install --upgrade setuptools wheel twine
+
+Make the package:
+
+    $ python setup.py sdist bdist_wheel
+
+Upload and test the package to the test PyPI repository:
+
+    $ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    $ sage -pip install -i https://test.pypi.org/simple sage_sample
+
+And later, upload your distribution to the real PyPI [optionally sign it with GPG]:
+
+    $ twine upload [-s] dist/*
+
 
 Usage
 -----
