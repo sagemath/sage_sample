@@ -12,7 +12,7 @@ install:
 	$(SAGE) -pip install --upgrade --no-index -v .
 
 uninstall:
-	$(SAGE) -pip uninstall -vy sage_sample 
+	$(SAGE) -pip uninstall $(PACKAGE)
 
 develop:
 	$(SAGE) -pip install --upgrade -e .

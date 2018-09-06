@@ -20,7 +20,7 @@ class SageTest(TestCommand):
 
 setup(
     name = "sage_sample",
-    version = readfile("VERSION"), # the VERSION file is shared with the documentation
+    version = readfile("VERSION").strip(), # the VERSION file is shared with the documentation
     description='An example of a basic sage package',
     long_description = readfile("README.rst"), # get the long description from the README
     url='https://github.com/sagemath/sage_sample',
@@ -41,5 +41,7 @@ setup(
     ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
     keywords = "SageMath packaging",
     packages = ['sage_sample'],
-    cmdclass = {'test': SageTest} # adding a special setup command for tests
+    cmdclass = {'test': SageTest}, # adding a special setup command for tests
+    setup_requires   = ['sage-package'],
+    install_requires = ['sage-package', 'sphinx'],
 )

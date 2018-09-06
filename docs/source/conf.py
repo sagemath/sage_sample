@@ -17,7 +17,7 @@ project = u"An example of a basic sage package"
 copyright = u'2016, Viviane Pons'
 package_name = 'sage_sample'
 package_folder = "../../sage_sample"
-authors = u"Nicolas M. Thiéry, Viviane Pons"
+authors = u"Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many"
 
 import sys
 import os
@@ -48,11 +48,9 @@ sys.path.append(os.path.join(SAGE_SRC, "sage_setup", "docbuild", "ext"))
 extensions = [
     #'sphinx.ext.autodoc',
     'sage_autodoc',
+    'sage_package.sphinx',
     'sphinx.ext.doctest',
-    'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'sphinx.ext.mathjax',
-    'sphinx.ext.extlinks',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -164,7 +162,7 @@ html_theme_path = [os.path.join(SAGE_DOC_SRC, 'common', 'themes', 'sage')]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static']
+# html_static_path = ['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied

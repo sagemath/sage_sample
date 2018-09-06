@@ -2,6 +2,9 @@
 Sage Sample Package
 ===================
 
+.. image:: https://mybinder.org/badge.svg
+   :target: https://mybinder.org/v2/gh/sagemath/sage_sample/master
+
 This package is designed as a simple `SageMath <http://www.sagemath.org>`_ package
 example to serve as a good practice reference for package developers. We follow
 python recommendations and adapt them to the SageMath community. You can find more
@@ -16,6 +19,9 @@ template out of it.
 Installation
 ------------
 
+Try the `demo <https://mybinder.org/v2/gh/sagemath/sage_sample/master?filepath=demo.ipynb>`_ on binder
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 Local install from source
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -27,7 +33,7 @@ Change to the root directory and run::
 
     $ sage -pip install --upgrade --no-index -v .
 
-For convenience this package contains a [makefile](makefile) with this
+For convenience this package contains a `makefile <makefile>`_ with this
 and other often used commands. Should you wish too, you can use the
 shorthand::
 
@@ -47,6 +53,8 @@ Once the package is installed, you can use it in Sage with::
     sage: answer_to_ultimate_question()
     42
 
+See also the `demo notebook <demo.ipynb>`_.
+
 Setup
 ------
 
@@ -65,8 +73,8 @@ Tests
 
 This package is configured for tests written in the documentation
 strings, also known as ``doctests``. For examples, see this
-[source file](sage_sample/ultimate_question.py). See also
-[SageMath's coding conventions and best practices document](http://doc.sagemath.org/html/en/developer/coding_basics.html#writing-testable-examples).
+`source file <sage_sample/ultimate_question.py>`_. See also
+`SageMath's coding conventions and best practices document <http://doc.sagemath.org/html/en/developer/coding_basics.html#writing-testable-examples>`_.
 With additional configuration, it would be possible to include unit
 tests as well.
 
