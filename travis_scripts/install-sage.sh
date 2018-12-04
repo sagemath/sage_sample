@@ -1,8 +1,11 @@
-#! /bin/sh
+#!/bin/bash
 # Copying and distribution of this file, with or without modification,
 # are permitted in any medium without royalty provided the copyright
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
+if [ "$TEST_TRAVIS" = "true" ] ; then
+    exit;
+fi
 set -e
 cd $HOME
 if [ ! -x SageMath/sage ] ; then 
