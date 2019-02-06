@@ -42,29 +42,51 @@ shorthand::
 Install from PyPI
 ^^^^^^^^^^^^^^^^^^
 
-sage_sample is distributed on PyPI. You can install it with the command:
+sage_sample is distributed on PyPI. You can install it with the command::
 
     $ sage -pip install sage_sample
 
-To distribute your own package on PyPI, you will need an account on pypi.org
-(maybe at first on test.pypi.org)
+Distribute via PyPI
+^^^^^^^^^^^^^^^^^^^
 
-You also need to install setuptools, wheel and twine:
+To distribute your own package on PyPI, you will need an account on
+`pypi.org <https://pypi.org/>`_ (maybe at first on
+`test.pypi.org <https://test.pypi.org/>`_).
+
+You also need to install setuptools, wheel and twine::
 
     $ sage -pip install --upgrade setuptools wheel twine
 
-Make the package:
+If the README file is in Markdown format, you need to install cmarkgfm as well::
 
-    $ python setup.py sdist bdist_wheel
+    $ sage -pip install --upgrade cmarkgfm
 
-Upload and test the package to the test PyPI repository:
+Then you can generate the distribution package via::
 
-    $ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    $ sage -sh
+    (sage-sh) python setup.py sdist bdist_wheel
+
+*NB:* if the package is both Python 2 and Python 3 compatible, use instead::
+
+    (sage-sh) python setup.py sdist bdist_wheel --universal
+
+Check that everything is all right::
+
+    (sage-sh) twine check dist/*
+
+Upload the package to the test PyPI repository::
+
+    (sage-sh) twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+
+Check the package install in Sage::
+
+    (sage-sh) exit
     $ sage -pip install -i https://test.pypi.org/simple sage_sample
 
-And later, upload your distribution to the real PyPI [optionally sign it with GPG]:
+And later, upload your distribution to the real PyPI [optionally sign it with GPG]::
 
-    $ twine upload [-s] dist/*
+    $ sage -sh
+    (sage-sh) twine upload [-s] dist/*
 
 
 Usage
@@ -157,7 +179,7 @@ Automatically deploying documentation to GitHub pages using Travis CI
 
 * First do the steps described above to enable Travis CI integration
   of your GitHub-hosted project.
-  
+
 * If you don't already have GitHub pages for your project: Create and
   checkout a branch ``gh-pages`` in your repository and put an empty
   file ``.nojekyll`` in it (see
@@ -173,7 +195,7 @@ Automatically deploying documentation to GitHub pages using Travis CI
     $ git commit -m "Initial commit"
     $ git push -u origin gh-pages
     $ cd ..
-   
+
 * (Back in your working copy:) Generate a new ssh key pair with an
   empty passphrase::
 
@@ -189,11 +211,11 @@ Automatically deploying documentation to GitHub pages using Travis CI
   https://github.com/travis-ci/travis.rb::
 
     $ gem install travis
-  
+
 * Log in to Travis CI using your GitHub credentials::
 
     $ travis login
-  
+
 * Encrypt the private ssh key, add the decryption keys
   as secure environment variables to Travis CI, and
   add code to ``.travis.yml`` to decrypt it::
