@@ -55,38 +55,35 @@ To distribute your own package on PyPI, you will need an account on
 
 You also need to install setuptools, wheel and twine::
 
-    $ sage -pip install --upgrade setuptools wheel twine
+    $ pip install --upgrade setuptools wheel twine
 
 If the README file is in Markdown format, you need to install cmarkgfm as well::
 
-    $ sage -pip install --upgrade cmarkgfm
+    $ pip install --upgrade cmarkgfm
 
 Then you can generate the distribution package via::
 
-    $ sage -sh
-    (sage-sh) python setup.py sdist bdist_wheel
+    $ python setup.py sdist bdist_wheel
 
 *NB:* if the package is both Python 2 and Python 3 compatible, use instead::
 
-    (sage-sh) python setup.py sdist bdist_wheel --universal
+    $ python setup.py sdist bdist_wheel --universal
 
 Check that everything is all right::
 
-    (sage-sh) twine check dist/*
+    $ twine check dist/*
 
 Upload the package to the test PyPI repository::
 
-    (sage-sh) twine upload --repository-url https://test.pypi.org/legacy/ dist/*
+    $ twine upload --repository-url https://test.pypi.org/legacy/ dist/*
 
 Check the package install in Sage::
 
-    (sage-sh) exit
     $ sage -pip install -i https://test.pypi.org/simple sage_sample
 
 And later, upload your distribution to the real PyPI [optionally sign it with GPG]::
 
-    $ sage -sh
-    (sage-sh) twine upload [-s] dist/*
+    $ twine upload [-s] dist/*
 
 
 Usage
