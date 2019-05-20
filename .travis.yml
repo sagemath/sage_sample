@@ -4,10 +4,12 @@ matrix:
   include:
   - env: CACHE_NAME=latest DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_REPOSITORY=mmasdeu/sage_sample
       DEPLOY_DOC_TO_DIRECTORY=doc/html SAGE_SERVER=http://mirrors.xmission.com/sage/linux/64bit/
-      SAGE_AGE=0
+      SAGE_AGE=0 UBUNTU_VERSION=Ubuntu_18.04-x86_64
   - env: CACHE_NAME=older SAGE_SERVER=http://mirrors.xmission.com/sage/linux/64bit/ SAGE_AGE=1
+      UBUNTU_VERSION=Ubuntu_18.04-x86_64
   allow_failures:
   - env: CACHE_NAME=older SAGE_SERVER=http://mirrors.xmission.com/sage/linux/64bit/ SAGE_AGE=1
+      UBUNTU_VERSION=Ubuntu_18.04-x86_64
 
 install:
 - "./.travis-install.sh"
