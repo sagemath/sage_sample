@@ -4,7 +4,7 @@
 # notice and this notice are preserved.  This file is offered as-is,
 # without any warranty.
 set -e
-SAGE_IMAGE=`python2 -c "import setup; print setup.get_all_version_names('${SAGE_SERVER}index.html',${SAGE_AGE}, distribution=${UBUNTU_VERSION})"`
+SAGE_IMAGE=`python2 -c "import setup; print setup.get_all_version_names('${SAGE_SERVER}index.html',${SAGE_AGE}, distribution='${UBUNTU_VERSION}')"`
 echo "Obtaining Sage image:"
 echo $SAGE_IMAGE
 cd $HOME
