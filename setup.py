@@ -49,6 +49,7 @@ if __name__ == "__main__":
     from Cython.Build import cythonize
     import Cython.Compiler.Options
     from sage.env import sage_include_directories
+    from sage.misc.banner import version as sage_version
 
 
     # Cython modules
@@ -59,7 +60,9 @@ if __name__ == "__main__":
     ]
 
     # Specify the required Sage version
-    sage_required_version = '>=7.4'
+    sage_required_version = u'>=8.9'
+    sage_current_version = sage_version()
+    py2 = bool('8.' in sage_current_version or '7.' in sage_current_version)
     REQUIREMENTS = [i.strip() for i in open("requirements.txt").readlines()]
 
     setup(
@@ -68,7 +71,7 @@ if __name__ == "__main__":
         description='An example of a basic sage package',
         long_description = readfile("README.rst"), # get the long description from the README
         url='https://github.com/sagemath/sage_sample',
-        author='Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many',
+        author='Matthias Koeppe, Sébastien Labbé, Marc Masdeu, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many',
         author_email='viviane.pons@lri.fr', # choose a main contact email
         license='GPLv2+', # This should be consistent with the LICENCE file
         classifiers=[
@@ -81,12 +84,14 @@ if __name__ == "__main__":
           'Topic :: Software Development :: Build Tools',
           'Topic :: Scientific/Engineering :: Mathematics',
           'License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)',
-          'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3.8',
         ], # classifiers list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
         keywords = "SageMath packaging",
         install_requires = REQUIREMENTS, # This ensures that Sage is installed
         packages = ['sage_sample'],
-        ext_modules = cythonize(ext_modules), # This line is only needed if there are cython files present
+        # The following line is only needed if there are cython files present
+        ext_modules = cythonize(ext_modules) if py2 \
+            else cythonize(ext_modules, compiler_directives={'language_level' : "3"}),
         include_package_data = True,
         cmdclass = {'build': build, 'test': SageTest} # adding a special setup command for tests
     )
