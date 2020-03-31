@@ -19,9 +19,9 @@ package_name = 'sage_sample'
 package_folder = "../../sage_sample"
 authors = u"Matthias Koeppe, Sébastien Labbé, Viviane Pons, Nicolas M. Thiéry, ... with inspiration from many"
 
+import six
 import sys
 import os
-
 from sage.env import SAGE_DOC_SRC, SAGE_DOC, SAGE_SRC
 
 try:
@@ -31,11 +31,15 @@ except ImportError:
 
 
 
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-sys.path.append(os.path.abspath(package_folder))
-sys.path.append(os.path.join(SAGE_SRC, "sage_setup", "docbuild", "ext"))
+sys.path.insert(0, os.path.abspath(package_folder))
+#sys.path.append(os.path.join(SAGE_SRC, "sage_setup", "docbuild", "ext"))
+
+
+print("Using sys.path = {}".format(sys.path))
 
 # -- General configuration ------------------------------------------------
 
@@ -46,12 +50,89 @@ sys.path.append(os.path.join(SAGE_SRC, "sage_setup", "docbuild", "ext"))
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-    #'sphinx.ext.autodoc',
-    'sage_autodoc',
-    'sage_package.sphinx',
+    'sphinx.ext.autodoc',
+    #'sage_autodoc',            ## Not available on conda-forge sage!
+    #'sage_package.sphinx',
     'sphinx.ext.doctest',
     'sphinx.ext.coverage',
+    'sphinx.ext.extlinks',
+    'matplotlib.sphinxext.plot_directive',
+    #'sphinxcontrib.bibtex'
 ]
+
+### from Sage src/doc/common/conf.py
+# This code is executed before each ".. PLOT::" directive in the Sphinx
+# documentation. It defines a 'sphinx_plot' function that displays a Sage object
+# through matplotlib, so that it will be displayed in the HTML doc.
+plot_html_show_source_link = False
+plot_pre_code = """
+def sphinx_plot(graphics, **kwds):
+    import matplotlib.image as mpimg
+    from sage.misc.temporary_file import tmp_filename
+    import matplotlib.pyplot as plt
+    ## Option handling is taken from Graphics.save
+    try:
+        from sage.plot.multigraphics import GraphicsArray
+    except ImportError:
+        from sage.plot.graphics import GraphicsArray
+    options = dict()
+    if not isinstance(graphics, GraphicsArray):
+        options.update(graphics.SHOW_OPTIONS)
+        options.update(graphics._extra_kwds)
+    options.update(kwds)
+    dpi = options.pop('dpi', None)
+    transparent = options.pop('transparent', None)
+    fig_tight = options.pop('fig_tight', None)
+    figsize = options.pop('figsize', None)
+    ## figsize handling is taken from Graphics.matplotlib()
+    if figsize is not None and not isinstance(figsize, (list, tuple)):
+        # in this case, figsize is a number and should be positive
+        try:
+            figsize = float(figsize) # to pass to mpl
+        except TypeError:
+            raise TypeError("figsize should be a positive number, not {0}".format(figsize))
+        if figsize > 0:
+            default_width, default_height=rcParams['figure.figsize']
+            figsize=(figsize, default_height*figsize/default_width)
+        else:
+            raise ValueError("figsize should be positive, not {0}".format(figsize))
+
+    if figsize is not None:
+        # then the figsize should be two positive numbers
+        if len(figsize) != 2:
+            raise ValueError("figsize should be a positive number "
+                             "or a list of two positive numbers, not {0}".format(figsize))
+        figsize = (float(figsize[0]),float(figsize[1])) # floats for mpl
+        if not (figsize[0] > 0 and figsize[1] > 0):
+            raise ValueError("figsize should be positive numbers, "
+                             "not {0} and {1}".format(figsize[0],figsize[1]))
+
+    plt.figure(figsize=figsize)
+    if isinstance(graphics, GraphicsArray):
+        ## from GraphicsArray.save
+        figure = plt.gcf()
+        rows = graphics.nrows()
+        cols = graphics.ncols()
+        for i, g in enumerate(graphics):
+            subplot = figure.add_subplot(rows, cols, i + 1)
+            g_options = copy(options)
+            g_options.update(g.SHOW_OPTIONS)
+            g_options.update(g._extra_kwds)
+            g_options.pop('dpi', None)
+            g_options.pop('transparent', None)
+            g_options.pop('fig_tight', None)
+            g.matplotlib(figure=figure, sub=subplot, **g_options)
+    else:
+        figure = graphics.matplotlib(figure=plt.gcf(), figsize=figsize, **options)
+    plt.tight_layout(pad=0)
+    plt.margins(0)
+    plt.show()
+
+from sage.all_cmdline import *
+"""
+
+plot_html_show_formats = False
+plot_formats = ['svg', 'pdf', 'png']
 
 # Add any paths that contain templates here, relative to this directory.
 # templates_path = ['_templates']
@@ -72,10 +153,15 @@ master_doc = 'index'
 # |version| and |release|, also used in various other places throughout the
 # built documents.
 #
-# The short X.Y version.
-version = open("../../VERSION").read().strip()
+from pkg_resources import get_distribution, DistributionNotFound
 # The full version, including alpha/beta/rc tags.
-release = version
+try:
+    release = get_distribution('sage-numerical-interactive-mip').version
+except DistributionNotFound:
+    release = "0.2"
+#print("############# release reported: {} ##################".format(release))
+# The short X.Y version.
+version = '.'.join(release.split('.')[:2])
 
 # The language for content autogenerated by Sphinx. Refer to documentation
 # for a list of supported languages.
@@ -115,34 +201,17 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 #keep_warnings = False
 
-pythonversion = sys.version.split(' ')[0]
-# Python and Sage trac ticket shortcuts. For example, :trac:`7549` .
-extlinks = {
-    'python': ('https://docs.python.org/release/'+pythonversion+'/%s', ''),
-    'trac': ('http://trac.sagemath.org/%s', 'trac ticket #'),
-    'wikipedia': ('https://en.wikipedia.org/wiki/%s', 'Wikipedia article '),
-    'arxiv': ('http://arxiv.org/abs/%s', 'Arxiv '),
-    'oeis': ('https://oeis.org/%s', 'OEIS sequence '),
-    'doi': ('https://dx.doi.org/%s', 'doi:'),
-    'mathscinet': ('http://www.ams.org/mathscinet-getitem?mr=%s', 'MathSciNet ')
-    }
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
+html_theme = 'sage'
+html_theme_path = ['../themes']
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {}
-
-
-# Add any paths that contain custom themes here, relative to this directory.
-#html_theme_path = []
-#html_theme_path = [os.path.join(SAGE_DOC_SRC, 'common', 'themes')]
-html_theme_path = [os.path.join(SAGE_DOC_SRC, 'common', 'themes', 'sage')]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -162,8 +231,7 @@ html_theme_path = [os.path.join(SAGE_DOC_SRC, 'common', 'themes', 'sage')]
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-#html_static_path = ['_static']
-html_static_path = []
+html_static_path = []   #['_static']
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -232,7 +300,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', package_name + '.tex', u'Documentation of ' + unicode(package_name),
+  ('index', package_name + '.tex', u'Documentation of ' + six.text_type(package_name),
    authors, 'manual'),
 ]
 
@@ -262,7 +330,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', package_name, unicode(package_name) + u" documentation",
+    ('index', package_name, six.text_type(package_name) + u" documentation",
      [authors], 1)
 ]
 
@@ -276,7 +344,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', package_name, unicode(package_name) + u" documentation",
+  ('index', package_name, six.text_type(package_name) + u" documentation",
    authors, package_name, project,
    'Miscellaneous'),
 ]
@@ -310,17 +378,20 @@ if (os.environ.get('SAGE_DOC_MATHJAX', 'no') != 'no'
     # this is broken for now
     # html_theme_options['mathjax_macros'] = sage_mathjax_macros()
 
-    from pkg_resources import Requirement, working_set
-    sagenb_path = working_set.find(Requirement.parse('sagenb')).location
-    mathjax_relative = os.path.join('sagenb','data','mathjax')
+    ## from pkg_resources import Requirement, working_set
+    ## sagenb_path = working_set.find(Requirement.parse('sagenb')).location
+    ## mathjax_relative = os.path.join('sagenb','data','mathjax')
 
-    # It would be really nice if sphinx would copy the entire mathjax directory,
-    # (so we could have a _static/mathjax directory), rather than the contents of the directory
+    ## # It would be really nice if sphinx would copy the entire mathjax directory,
+    ## # (so we could have a _static/mathjax directory), rather than the contents of the directory
 
-    mathjax_static = os.path.join(sagenb_path, mathjax_relative)
-    html_static_path.append(mathjax_static)
-    exclude_patterns=['**/'+os.path.join(mathjax_relative, i) for i in ('docs', 'README*', 'test',
-                                                                        'unpacked', 'LICENSE')]
+    ## mathjax_static = os.path.join(sagenb_path, mathjax_relative)
+    ## html_static_path.append(mathjax_static)
+    ## exclude_patterns=['**/'+os.path.join(mathjax_relative, i) for i in ('docs', 'README*', 'test',
+    ##                                                                     'unpacked', 'LICENSE')]
+    from sage.env import SAGE_LOCAL, SAGE_SHARE
+    html_static_path.append(SAGE_LOCAL + "/lib/mathjax")    # conda
+    html_static_path.append(SAGE_SHARE + "/mathjax")  # sage distribution
 else:
      extensions.append('sphinx.ext.pngmath')
 
@@ -349,3 +420,26 @@ latex_elements['preamble'] += r'''
 \makeatother
 \renewcommand{\ttdefault}{txtt}
 '''
+
+#####################################################
+# add LaTeX macros for Sage
+
+from sage.misc.latex_macros import sage_latex_macros
+
+try:
+    pngmath_latex_preamble  # check whether this is already defined
+except NameError:
+    pngmath_latex_preamble = ""
+
+for macro in sage_latex_macros():
+    # used when building latex and pdf versions
+    latex_elements['preamble'] += macro + '\n'
+    # used when building html version
+    pngmath_latex_preamble += macro + '\n'
+
+
+## The following is needed on conda-forge sagemath
+from sage.repl.user_globals import initialize_globals
+import sage.all
+my_globs = dict()
+initialize_globals(sage.all, my_globs)
