@@ -1,0 +1,33 @@
+## This is a conda environment file.
+## Use it as follows:
+##
+##    conda env create -f environment-python2.yml
+##
+## See https://towardsdatascience.com/a-guide-to-conda-environments-bc6180fc533
+## or    https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+##
+## We have a separate environment for python2 because apparently
+## "conda env create" does not understand how to combine packages
+## given on the command-line with those provided with "-f
+## environment.yml".
+##
+## https://stackoverflow.com/questions/55236267/conda-force-non-regression-of-python-version
+name: sage-cgf-python2
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=2.7
+  - sage=9.0
+  - setuptools_scm
+  - sphinx<2.0
+  - sphinxcontrib-websupport<1.2
+  - sphinxcontrib-bibtex<1.0
+  - lrslib
+  - normaliz
+  - boost-cpp      # For installing PyNormaliz
+  - mathjax
+  - pip
+  - pip:
+    - pynormaliz==2.8
+    - sage-package

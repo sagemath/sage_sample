@@ -1,0 +1,26 @@
+## This is a conda environment file.
+## Use it as follows:
+##
+##    conda env create -f environment-latestsage.yml
+##
+## See https://towardsdatascience.com/a-guide-to-conda-environments-bc6180fc533
+## or    https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+name: sage-cgf-latestsage
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3
+  - sage
+  - setuptools_scm
+  - sphinx
+  - sphinxcontrib-websupport
+  - sphinxcontrib-bibtex
+  - lrslib
+  - normaliz
+  - boost-cpp      # For installing PyNormaliz
+  - mathjax
+  - pip
+  - pip:
+    - pynormaliz==2.8
+    - sage-package
