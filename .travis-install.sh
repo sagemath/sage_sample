@@ -1,18 +1,25 @@
-#! /bin/sh
-# Copying and distribution of this file, with or without modification,
-# are permitted in any medium without royalty provided the copyright
-# notice and this notice are preserved.  This file is offered as-is,
-# without any warranty.
-set -e
-cd $HOME
-if [ ! -x SageMath/sage ] ; then 
-    rm -f SageMath.tar.bz2
-    wget --progress=dot:giga $SAGE_SERVER$SAGE_IMAGE -O SageMath.tar.bz2
-    tar xf SageMath.tar.bz2
+#! /bin/bash
+## best if sourced!
+##
+if source "$HOME/miniconda/etc/profile.d/conda.sh"; then
+    hash -r
+    conda --version
+else
+    ## from https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/use-conda-with-travis-ci.html
+    sudo apt-get update
+    # We do this conditionally because it saves us some downloading if the
+    # version is the same.
+    if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+        wget https://repo.continuum.io/miniconda/Miniconda2-latest-Linux-x86_64.sh -O miniconda.sh;
+    else
+        wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+    fi
+    rm -rf $HOME/miniconda
+    bash miniconda.sh -b -p $HOME/miniconda
+    source "$HOME/miniconda/etc/profile.d/conda.sh"
 fi
-MAKE="make -j4"
-export MAKE
-# Install packages
-#SageMath/sage -i lrslib
-# To initialize matplotlib font manager
-SageMath/sage -python -c 'import matplotlib.pyplot'
+hash -r
+conda config --set always_yes yes --set changeps1 no
+conda update -q conda
+# Useful for debugging any issues with conda
+conda info -a
