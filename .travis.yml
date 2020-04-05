@@ -5,22 +5,44 @@
 language: python
 matrix:
   include:
-  - env: CACHE_NAME=9.0 DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_DIRECTORY=/ SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-9.0-Ubuntu_18.04-x86_64.tar.bz2
-    dist: trusty
-#  - env: CACHE_NAME=8.0 DEPLOY_DOC_FROM_BRANCH=master DEPLOY_DOC_TO_DIRECTORY=/ SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-8.0-Ubuntu_14.04-x86_64.tar.bz2
-#    dist: trusty
-#  - env: CACHE_NAME=7.6 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.6-Ubuntu_12.04-x86_64.tar.bz2
-#    dist: precise
-#  - env: CACHE_NAME=7.5.1 SAGE_SERVER=http://mirrors.xmission.com/sage/ SAGE_IMAGE=linux/64bit/sage-7.5.1-Ubuntu_12.04-x86_64.tar.bz2
-#    dist: precise
+  ##
+  ## Test with conda-forge sagemath package
+  ##
+  - env: CACHE_NAME=conda CONDA_ENV=sage-cgf DEPLOY_DOC_TO_DIRECTORY=doc/html
+    python: "2.7"    ## just for display. The version used is actually determined by conda.
+    before_install:
+    - source ./.travis-conda-install.sh
+    - conda env create -n $CONDA_ENV -f environment-python2.yml || conda env update -n $CONDA_ENV --prune -f environment-python2.yml
+    - conda activate $CONDA_ENV
+    deploy:
+      - provider: script
+        skip_cleanup: true
+        script: bash -x .travis-deploy-doc.sh
+        on:
+          branch: master
+          repo: mkoeppe/cutgeneratingfunctionology
+          condition: -r .travis_ci_gh_pages_deploy_key
+  - env: CACHE_NAME=conda-py3 CONDA_ENV=sage-cgf-py3
+    python: "3.7"    ## just for display. The version used is actually determined by conda.
+    before_install:
+    - source ./.travis-conda-install.sh
+    - conda env create -n $CONDA_ENV -f environment.yml || conda env update -n $CONDA_ENV --prune -f environment.yml
+    - conda activate $CONDA_ENV
+  - env: CACHE_NAME=conda-py3-latestsage CONDA_ENV=sage-cgf-latestsage
+    python: "3.7"    ## just for display. The version used is actually determined by conda.
+    before_install:
+    - source ./.travis-conda-install.sh
+    - conda env create -n $CONDA_ENV -f environment-latestsage.yml || conda env update -n $CONDA_ENV --prune -f environment-latestsage.yml
+    - conda activate $CONDA_ENV
 install:
 - ./.travis-install.sh
 script:
 - ./.travis-test.sh
 cache:
   directories:
-  - $HOME/SageMath
-  - $HOME/.cache/matplotlib
+  - "$HOME/miniconda"
+  - "$HOME/SageMath"
+  - "$HOME/.cache/matplotlib"
   timeout: 1000
 before_cache:
 - rm -Rf $HOME/SageMath/logs $HOME/SageMath/.BUILDSTART
